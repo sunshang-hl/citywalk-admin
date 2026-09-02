@@ -5,6 +5,44 @@
 - 技术栈：Vue 3.5 + TypeScript + Element Plus 2.11 + Pinia + vue-router 4 + @logto/vue 3.0.13
 - 后端 API：PostgREST `api_v1_platform` schema（视图 GET / RPC POST，JWT Bearer 认证）
 
+> 本仓库是 [SharpFort/OmniAdmin](https://github.com/SharpFort/OmniAdmin) 的 fork，作为 **citywalk 项目的 admin 管理系统前端**。框架维护与业务开发约定见下方「citywalk-admin 二次开发约定」。
+
+## citywalk-admin 二次开发约定
+
+### 与上游 OmniAdmin 的同步
+
+```bash
+git fetch upstream && git merge upstream/main   # 用 merge，不要 rebase（main 已发布）
+git push origin main
+```
+
+- **勤合并**：每周或每开始新功能前同步一次上游，小步合并几乎不会有冲突。
+- 框架层面的通用改动**不要在本仓库直接改**：先在 OmniAdmin 上游改好、合并下来；有普适价值的改进可以 PR 反哺上游。
+- citywalk 功能在 `feature/citywalk-*` 分支开发，合并回本仓库 `main` 后推送 origin。
+- GitHub 页面的 **Sync fork** 按钮可用于无冲突快进。
+
+### 模块组织（citywalk 业务代码全部按模块隔离，全是新增文件）
+
+```
+src/api/citywalk/<module>.ts                            # 每模块一个 API 文件
+src/views/citywalk/<module>/                            # 每模块一个页面目录
+src/router/modules/citywalk/<module>.ts                 # 每模块一个路由文件（自动注册）
+src/locales/langs/overlay/zh|en/citywalk/<module>.json  # 每模块文案（自动合并进基础包）
+```
+
+- 路由模块由 `src/router/modules/index.ts` 的 `import.meta.glob` **自动扫描注册**，新增模块文件即可，**不要修改 `index.ts`**。
+- 文案放 `langs/overlay/<lang>/citywalk/` 下的 JSON，由 `src/locales/index.ts` 自动深度合并，**不要修改 `zh.json`/`en.json` 基础包**。
+- 示例参考：路线管理模块（`api/citywalk/route.ts` + `views/citywalk/route/` + `router/modules/citywalk/route.ts` + overlay 文案）。
+- 菜单为后端模式（`VITE_ACCESS_MODE=backend`）：新模块需在后端菜单表初始化数据，方案见 OmniAdmin `docs/5.菜单初始化-前端页面分类与入库方案.md`。
+
+### 不要触碰的框架核心
+
+`src/views/system/**`、`src/components/core/**`、`src/router/core/**`、`src/store/**`、`src/hooks/**`——这些与上游共用，直接改动会在每次同步时制造冲突。
+
+### 环境配置
+
+开发/测试阶段与 OmniAdmin **共用同一套 OmniPG 后端**（同一 PostgREST、同一 Logto 实例/组织、同一菜单权限数据），配置见 `.env.development`（端口用已登记的 3007，可与 OmniAdmin 3006 同时运行）。**正式上线前**按 `.env.development` / `.env.production` 头部注释切换为 citywalk 独立配置（独立 API 地址、独立 Logto 应用、正式系统名）。
+
 ## 快速开始
 
 ```bash
