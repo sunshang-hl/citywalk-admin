@@ -3,7 +3,7 @@
     <ElCard class="art-table-card">
       <template #header>
         <div class="flex items-center gap-2">
-          <ElIcon><MapPin /></ElIcon>
+          <ElIcon><MapLocation /></ElIcon>
           <span>{{ $t('menus.citywalk.route') }}</span>
         </div>
       </template>
@@ -15,5 +15,5 @@
 </template>
 
 <script setup lang="ts">
-  import { MapPin } from '@element-plus/icons-vue'
+  import { MapLocation } from '@element-plus/icons-vue'
 </script>
