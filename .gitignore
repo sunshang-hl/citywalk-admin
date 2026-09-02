@@ -11,8 +11,8 @@ dist-ssr
 !.env.example
 
 # Auto-generated files
-src/types/import/auto-imports.d.ts
-src/types/import/components.d.ts
+# auto-imports.d.ts / components.d.ts 入库：vue-tsc 先于 vite 生成它们运行，
+# fresh clone 不入库会导致 pnpm build 失败（Cannot find name 'computed' 等）
 .auto-import.json
 
 # Local database export files
