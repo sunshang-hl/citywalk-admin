@@ -5,21 +5,24 @@
 - 技术栈：Vue 3.5 + TypeScript + Element Plus 2.11 + Pinia + vue-router 4 + @logto/vue 3.0.13
 - 后端 API：PostgREST `api_v1_platform` schema（视图 GET / RPC POST，JWT Bearer 认证）
 
-> 本仓库是 [SharpFort/OmniAdmin](https://github.com/SharpFort/OmniAdmin) 的 fork，作为 **citywalk 项目的 admin 管理系统前端**。框架维护与业务开发约定见下方「citywalk-admin 二次开发约定」。
+> 本仓库是 **citywalk 项目的 admin 管理系统前端**（SharpFort 私有仓库），代码源自 [SharpFort/OmniAdmin](https://github.com/SharpFort/OmniAdmin)，通过 `upstream` remote 持续合并上游更新（保留了完整上游历史）。框架维护与业务开发约定见下方「citywalk-admin 二次开发约定」。
 
 ## citywalk-admin 二次开发约定
 
-### 与上游 OmniAdmin 的同步
+### 仓库 remote 布局与上游同步
 
 ```bash
+# origin  = https://github.com/SharpFort/citywalk-admin.git   （本仓库，私有）
+# fork    = https://github.com/sunshang-hl/citywalk-admin.git （公共 fork，用于向上游发 PR，可选）
+# upstream= https://github.com/SharpFort/OmniAdmin.git         （框架上游）
+
 git fetch upstream && git merge upstream/main   # 用 merge，不要 rebase（main 已发布）
 git push origin main
 ```
 
 - **勤合并**：每周或每开始新功能前同步一次上游，小步合并几乎不会有冲突。
-- 框架层面的通用改动**不要在本仓库直接改**：先在 OmniAdmin 上游改好、合并下来；有普适价值的改进可以 PR 反哺上游。
+- 框架层面的通用改动**不要在本仓库直接改**：先在 OmniAdmin 上游改好、合并下来；有普适价值的改进可以 PR 反哺上游（本仓库为私有，向上游发 PR 需借助 `fork` remote：`git push fork main` 后从 sunshang-hl/citywalk-admin 发起）。
 - citywalk 功能在 `feature/citywalk-*` 分支开发，合并回本仓库 `main` 后推送 origin。
-- GitHub 页面的 **Sync fork** 按钮可用于无冲突快进。
 
 ### 模块组织（citywalk 业务代码全部按模块隔离，全是新增文件）
 

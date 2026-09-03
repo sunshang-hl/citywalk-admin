@@ -4,7 +4,8 @@
 
 ## 与上游的关系（最重要）
 
-- 上游 remote：`upstream` = https://github.com/SharpFort/OmniAdmin.git（origin 为本 fork）。
+- 本仓库是 **SharpFort 私有仓库**（非 GitHub fork），代码源自 OmniAdmin，保留完整上游历史。
+- remote 布局：`origin` = SharpFort/citywalk-admin（本仓库，私有）；`upstream` = SharpFort/OmniAdmin（框架上游）；`fork` = sunshang-hl/citywalk-admin（公共 fork，仅在需要向上游发 PR 时使用）。
 - 同步上游：`git fetch upstream && git merge upstream/main`（**用 merge，不要 rebase**），每周或每开始新功能前同步一次。
 - **框架核心文件不得直接修改**：`src/views/system/**`、`src/components/core/**`、`src/router/core/**`、`src/store/**`、`src/hooks/**`。需要改框架时先在 OmniAdmin 上游改好再合并下来。
 - citywalk 功能在 `feature/citywalk-*` 分支开发，合并回 `main` 后推送 origin。
